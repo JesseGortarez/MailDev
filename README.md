@@ -1,1 +1,1 @@
-# Theft Alerts Email template
+# HTML Email Development Support
