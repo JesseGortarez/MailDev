@@ -16,16 +16,20 @@ module.exports = function(grunt) {
         livereload: true,
       },
       livereload: {
-        files: ['assets/**/*.less', 'assets/**/*.hbs'],
+        files: ['assets/**/*.less', 'assets/*.hbs'],
         tasks: ['build']
       }
     },
     clean: {
-      build: ['build']
+      build: ['build'],
+      post: [
+        'build/index-raw.html',
+        'build/all.css'
+      ]
     },
     inlinecontent: {
       main: {
-        src: 'assets/index.html',
+        src: 'build/index-raw.html',
         css: ['build/css/all.css'],
         dest: 'build/index.html',
       }
@@ -34,7 +38,7 @@ module.exports = function(grunt) {
       main: {
         engine: 'handlebars',
         cwd: 'assets/',
-        partials: ['assets/modules/**/*.hbs'],
+        partials: ['assets/modules/*.hbs'],
         options: {},
         files: [
           {
@@ -42,7 +46,7 @@ module.exports = function(grunt) {
             cwd: 'assets/',
             src: '*.hbs',
             dest: 'build/',
-            ext: '.html'
+            ext: '-raw.html'
           }
         ]
       }
@@ -50,15 +54,15 @@ module.exports = function(grunt) {
     less: {
       main: {
         options: {
-          paths: ['assets/css'],
-          files: {
-            'build/css/all.css': ['assets/css/all.less']
-          }
+          paths: ['assets/css']
+        },
+        files: {
+          'build/css/all.css': 'assets/css/all.less'
         }
       }
     }
   });
   require('load-grunt-tasks')(grunt, ['grunt-*']);
   grunt.registerTask('default', ['build', 'connect', 'watch']);
-  grunt.registerTask('build', ['clean', 'less', 'template', 'inlinecontent']);
+  grunt.registerTask('build', ['clean:build', 'less', 'template', 'inlinecontent', 'clean:post']);
 };
