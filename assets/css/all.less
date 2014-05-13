@@ -4,7 +4,43 @@ body {
   font-family: @font-family;
 }
 
+table {
+  border-collapse: collapse;
+  mso-table-lspace: 0;
+  mso-table-rspace: 0;
+  &.background-table {
+
+  }
+  &.content-table {
+
+  }
+}
+
+
+td {
+ border-collapse: collapse;
+}
+
 .header-h1 {
   font-size: 2.5em;
   text-align: center;
+}
+
+.bulletproof-button {
+  text-decoration: none;
+  padding-bottom: 2px;
+  font-size: 15px;
+  font-weight: normal;
+  border: none;
+  font-family: @font-family;
+  color: #ffffff;
+  margin-top: 5px;
+  background-color: @green;
+  box-shadow: 0px 4px 0px darken(@green, 10%);
+  border-top: 12px solid @green;
+  border-left: 22px solid @green;
+  border-bottom: 12px solid @green;
+  border-right: 22px solid @green;
+  border-radius: 3px;
+  display: inline-block;
 }
