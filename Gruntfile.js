@@ -1,4 +1,16 @@
 module.exports = function(grunt) {
+
+  // Requires a `renameBase` property in task config options.
+  var flattenPath = function (dest, src) {
+    var path = grunt.task.current.data.renameBase;
+    // Make files sibling to those in `renameBase`.
+    if (src.indexOf(path) === 0) {
+      return dest + src.slice(path.length);
+    } else {
+      return dest + src;
+    }
+  };
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     connect: {
@@ -16,39 +28,32 @@ module.exports = function(grunt) {
         livereload: true,
       },
       livereload: {
-        files: ['assets/**/*.less', 'assets/*.hbs'],
+        files: ['assets/**/*.less', 'assets/**/*.hbs'],
         tasks: ['build']
       }
     },
     clean: {
-      build: ['build'],
-      post: [
-        'build/index-raw.html',
-        'build/all.css'
-      ]
+      build: ['build']
     },
     inlinecontent: {
       main: {
-        src: 'build/index-raw.html',
+        expand: true,
+        src: 'build/*.html',
         css: ['build/css/all.css'],
-        dest: 'build/index.html',
+        dest: 'build',
+        renameBase: 'build',
+        rename: flattenPath
       }
     },
-    template: {
+    'compile-handlebars': {
       main: {
-        engine: 'handlebars',
-        cwd: 'assets/',
-        partials: ['assets/modules/*.hbs'],
-        options: {},
-        files: [
-          {
-            expand: true,
-            cwd: 'assets/',
-            src: '*.hbs',
-            dest: 'build/',
-            ext: '-raw.html'
-          }
-        ]
+        template: 'assets/*.hbs',
+        // These properties will be available in partials and templates.
+        templateData: {text: 'Hello!'},
+        output: '<%= inlinecontent.main.src %>',
+        // Helper files must share the same name as the helper itself.
+        helpers: 'assets/helpers/**/*.js',
+        partials: 'assets/**/*.hbs'
       }
     },
     less: {
@@ -64,5 +69,5 @@ module.exports = function(grunt) {
   });
   require('load-grunt-tasks')(grunt, ['grunt-*']);
   grunt.registerTask('default', ['build', 'connect', 'watch']);
-  grunt.registerTask('build', ['clean:build', 'less', 'template', 'inlinecontent', 'clean:post']);
+  grunt.registerTask('build', ['clean:build', 'less', 'compile-handlebars', 'inlinecontent']);
 };
