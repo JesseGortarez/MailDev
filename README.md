@@ -20,7 +20,11 @@ In `assets/modules` you'll find handlebars partials - Note: handlebars can be sw
 
 In `assets/modules` are `less` files. `all.less` is the main file where all partials are imported and eventually compiled by `grunt`. Depending on your coding style and preference, new modules can have stylesheets broken out by module name such as `_buttons.less` and `_layout.less` or simply include all code directly in `all.less` - the choice is yours.
 
-
+### Creating an Email
+* Edit the module file html
+* Edit the css file
+* Each time you save a file it is automatically recompiled and a `build` folder is created where your `html` and `css` files can be viewed.
+* The `html` file will have fully inlined `css` and is ready to be imported directly into your email delivery service (Mailchimp, ExactTarget, etc.)
 
 
 ## Troubleshooting
