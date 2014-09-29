@@ -13,8 +13,24 @@ table {
   mso-table-lspace: 0;
   mso-table-rspace: 0;
   color: #5b5b5b;
+  td {
+    font-size: @font-size;
+    line-height: 1.5;
+  }
   img {
     max-width: 100%;
+    &.center-img {
+      display: block;
+      margin: 0 auto;
+    }
+    &.left-img {
+      display: block;
+      margin: 0;
+    }
+    &.right-img {
+      display: block;
+      margin-right: 0;
+    }
   }
   &.background-table {
   }
@@ -24,7 +40,7 @@ table {
     border-bottom: 5px solid #f5f5f5;
     border-radius: 5px 5px 0 0;
     .header-h1 {
-      font-size: 2.5em;
+      font-size: @h1-font-size;
       text-align: center;
       color: @green;
     }
@@ -34,25 +50,13 @@ table {
   &.img-table {
     border-top: 5px solid #f5f5f5;
     border-bottom: 5px solid #f5f5f5;
-    .centered-img {
-      display: block;
-      margin: auto;
-    }
-    .left-img {
-      display: block;
-      margin: auto;
-    }
-    .right-img {
-      display: block;
-      margin: auto;
-    }
   }
   &.footer-table {
     border-top: 5px solid #f5f5f5;
     border-radius: 0 0 5px 5px;
     .footer-table-td {
-      font-size: 14px;
-      color: #555555;
+      font-size: @small-font-size;
+      color: #aaaaaa;
       text-align: center;
     }
   }
